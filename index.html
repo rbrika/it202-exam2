@@ -1,13 +1,76 @@
 <!--Rime Brika Exam 2-->
 <!DOCTYPE html>
 <html>
-    <head>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>repl.it</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	 crossorigin="anonymous">
+	<style>
+		.template {
+			display: none;
+		}
+    .Pass {color: green;}
+    .Fail {color: red;}
+	</style>
+
+</head>
+
+<body>
+    <div id="dept">
         
-    </head>
-    <body>
-        
-        <script async defer
-        src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCODaRYxz2gS1fniGC3JVDYQPh2ORVkXXU">
-        </script>
-    </body> 
+    </div>
+    <div class="deptTemp">
+        <ul id="list-group">
+          <li id="item" class="list-group-item d-flex justify-content-between align-items-center">
+            Cras justo odio
+            <span id="count" class="badge badge-primary badge-pill">14</span>
+            </li>
+    </ul>
+    </div>
+    <div id ="cards">  </div>
+	<div class="card template" style="width: 18rem;">
+		<div class="card-body">
+			<h5 class="card-title">Card title</h5>
+			<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+			<a href="#" class="card-link">Card link</a>
+			<a href="#" class="card-link">Another link</a>
+		</div>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+
+	</script>
+
+	<script>
+		$(document).ready(function(){
+
+          var endpoint = "https://data.cityofchicago.org/resource/xzkq-xp2w.json?$select=department,count(department)&$group=department";
+        var url=endpoint;
+
+        $.get(url, function(response) {
+          $("#cards").append("<h2> Your search returned "+ response.length+"  records.</h2>")
+          console.log(response);
+          var data = response;
+          $.each(data, function(i,v){
+             var clone= $(".list-group-item").clone();
+                    clone.find("#count").text(v.count_department);
+                  clone.find("#item").text(v.department);
+                 clone.removeClass(".list-group-item")
+              $("#dept").append(clone);
+          });
+        });
+      });
+        $("body").on("click","#item",function(){
+             var clone = $(".template").clone();
+            clone.find(".card-title").text(v.dba_name);
+            clone.find(".card-title").addClass(v.results);
+            clone.find(".card-title").attr("data-results", v.results);
+            clone.find(".card-subtitle").text(v.facility_type);
+         });
+	</script>
+</body>
+
 </html>
